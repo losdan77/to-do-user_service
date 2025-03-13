@@ -1,4 +1,4 @@
-from shared_models.database import async_session_maker
+from app.database import async_session_maker
 
 from sqlalchemy import select, insert, delete, text
 

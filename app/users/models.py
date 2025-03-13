@@ -3,7 +3,7 @@ import uuid_utils
 from sqlalchemy import Index, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import UUID
-from database import Base, str_not_null, str_null, created_at
+from app.database import Base, str_not_null, str_null, created_at
 
 
 class Users(Base):
