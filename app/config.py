@@ -36,6 +36,8 @@ class Settings(BaseSettings):
 
     SECRET_WORD: str
     HASH_ALGORITHM: str
+    MAX_AGE_ACCESS_TOKEN: int
+    MAX_AGE_REFRESH_TOKEN: int
 
     model_config = SettingsConfigDict(env_file=".env")
 

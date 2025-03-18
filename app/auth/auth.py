@@ -1,3 +1,4 @@
+import uuid_utils
 from passlib.context import CryptContext
 from datetime import datetime, timedelta, timezone
 from jose import jwt
@@ -17,12 +18,16 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 def create_access_token(data: dict) -> str:
     to_encode = data.copy()
-    expire = datetime.now(timezone.utc) + timedelta(minutes=60*24)
+    expire = datetime.now(timezone.utc) + timedelta(seconds=settings.MAX_AGE_ACCESS_TOKEN) # 5 минут сделано для теста
     to_encode.update({'exp': expire})
     encoded_jwt = jwt.encode(
-        to_encode, settings.SECRET_WORD, settings.HASH_ALGORITHM #ВЫНЕСТИ В .ENV
+        to_encode, settings.SECRET_WORD, settings.HASH_ALGORITHM
     ) 
     return encoded_jwt
+
+def create_refresh_token() -> str:
+    token = str(uuid_utils.uuid7())
+    return token
 
 async def authenticate_user(email: EmailStr, password: str):
     user = await UsersDAO.find_one_or_none(email=email)
